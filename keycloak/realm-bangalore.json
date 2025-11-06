@@ -1,0 +1,50 @@
+{
+  "realm": "realm-bangalore",
+  "enabled": true,
+  "displayName": "bangalore Region Realm",
+  "roles": {
+    "realm": [
+      { "name": "owner" },
+      { "name": "driver" },
+      { "name": "user" },
+      { "name": "member" }
+    ]
+  },
+  "users": [
+    {
+      "username": "bangalore_admin",
+      "enabled": true,
+      "credentials": [{ "type": "password", "value": "admin123" }],
+      "realmRoles": ["owner"],
+	  "emailVerified":true,
+	  "email": "manishkumar.03@gmail.com",
+	   "realmRoles": ["realm-owner"] 
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "bangalore-client",
+      "secret": "bangalore-secret",
+      "publicClient": false,
+      "redirectUris": ["*"]
+    }
+  ],
+  "groups": [
+    {
+      "name": "Admins-BLR",
+      "realmRoles": ["owner"]
+    },
+    {
+      "name": "Members-BLR",
+      "realmRoles": ["member"]
+    },
+	{
+      "name": "Users-BLR",
+      "realmRoles": ["user"]
+    },
+	{
+      "name": "Drivers-BLR",
+      "realmRoles": ["driver"]
+    }
+  ]
+}

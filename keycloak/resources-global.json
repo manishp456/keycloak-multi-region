@@ -1,0 +1,43 @@
+{
+  "realm": "global-realm",
+  "roles": {
+    "realm": [
+      { "name": "admin" },
+      { "name": "member" },
+      { "name": "user" }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "frontend-app-global",
+      "publicClient": true,
+      "redirectUris": ["http://localhost:3000/*"],
+      "webOrigins": ["+"],
+      "defaultRoles": ["user"],
+      "protocol": "openid-connect"
+    },
+    {
+      "clientId": "backend-service",
+      "secret": "backend-secret-key",
+      "serviceAccountsEnabled": true,
+      "authorizationServicesEnabled": true,
+      "protocol": "openid-connect",
+      "defaultRoles": ["admin"],
+      "redirectUris": ["http://localhost:8081/*"]
+    }
+  ],
+  "groups": [
+    {
+      "name": "Admins",
+      "realmRoles": ["admin"]
+    },
+    {
+      "name": "Members",
+      "realmRoles": ["member"]
+    },
+	{
+      "name": "Users",
+      "realmRoles": ["user"]
+    }
+  ]
+}

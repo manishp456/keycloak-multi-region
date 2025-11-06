@@ -1,0 +1,33 @@
+{
+  "realm": "global-realm",
+  "enabled": true,
+  "displayName": "Global Identity Broker",
+  "roles": {
+    "realm": [
+      { "name": "superuser" },
+      { "name": "global-admin" }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "global-console",
+      "directAccessGrantsEnabled": true,
+      "publicClient": true,
+      "redirectUris": ["*"]
+    }
+  ],
+  "identityProviders": [
+    {
+      "alias": "realm-bangalore",
+      "displayName": "bangalore Region",
+      "providerId": "keycloak-oidc",
+      "enabled": true,
+      "config": {
+        "authorizationUrl": "http://keycloak-bangalore:8080/realms/realm-bangalore/protocol/openid-connect/auth",
+        "tokenUrl": "http://keycloak-bangalore:8080/realms/realm-bangalore/protocol/openid-connect/token",
+        "clientId": "bangalore-client",
+        "clientSecret": "bangalore-secret"
+      }
+    }
+  ]
+}

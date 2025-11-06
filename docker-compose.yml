@@ -1,0 +1,107 @@
+services:
+  postgres-global:
+    image: postgres:15
+    container_name: postgres-global
+    environment:
+      POSTGRES_DB: global_db_instance
+      POSTGRES_USER: superuser
+      POSTGRES_PASSWORD: keycloak@123
+    volumes:
+      - ./postgres/init-global.sql:/docker-entrypoint-initdb.d/init-global.sql:ro
+      - postgres-global-data:/var/lib/postgresql/data
+    networks:
+      - hours-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U superuser -d global_db_instance"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    
+  postgres-bangalore:
+    image: postgres:15
+    container_name: postgres-bangalore
+    environment:
+      POSTGRES_DB: bangalore_db_instance
+      POSTGRES_USER: superuser
+      POSTGRES_PASSWORD: keycloak@123
+    volumes:
+      - ./postgres/init-bangalore.sql:/docker-entrypoint-initdb.d/init-bangalore.sql
+      - postgres-bangalore-data:/var/lib/postgresql/data
+    networks:
+      - hours-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U superuser -d bangalore_db_instance"]
+      interval: 5s
+      timeout: 5s
+      retries: 10  
+      
+  keycloak-global:
+    image: quay.io/keycloak/keycloak:26.0.7
+    container_name: keycloak-global
+    depends_on:
+      - postgres-global
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres-global:5432/global_db_instance
+      KC_DB_USERNAME: superuser
+      KC_DB_PASSWORD: keycloak@123
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin@123
+      KC_PROXY: edge
+      KC_HTTP_ENABLED: true
+      KC_HOSTNAME_STRICT: false
+      KC_HOSTNAME: keycloak-global.local
+      KC_PROXY_HEADERS: xforwarded
+    ports:
+      - "9000:8080"
+    command: start-dev --import-realm
+    volumes:
+      - ./keycloak/global-realm.json:/opt/keycloak/data/import/global-realm.json
+    networks:
+      - hours-net
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    
+  keycloak-bangalore:
+    image: quay.io/keycloak/keycloak:26.0.7
+    container_name: keycloak-bangalore
+    environment:
+      KC_DB: postgres
+      KC_DB_URL_HOST: postgres-bangalore
+      KC_DB_URL_DATABASE: bangalore_db_instance
+      KC_DB_USERNAME: superuser
+      KC_DB_PASSWORD: keycloak@123
+      KC_HTTP_RELATIVE_PATH: /auth
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin@123
+      KC_PROXY: edge
+      KC_HTTP_ENABLED: true
+      KC_HOSTNAME_STRICT: false
+      KC_HOSTNAME: keycloak-bangalore.local
+      KC_PROXY_HEADERS: xforwarded
+    ports:
+      - "9090:8080"
+    command: start-dev
+    depends_on:
+      - postgres-bangalore
+    volumes:
+      - ./keycloak/realm-bangalore.json:/opt/keycloak/data/import/realm-bangalore.json
+    networks:
+      - hours-net  
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    
+networks:
+  hours-net:
+    driver: bridge
+    
+volumes:
+  postgres-global-data:
+  postgres-bangalore-data:
+  

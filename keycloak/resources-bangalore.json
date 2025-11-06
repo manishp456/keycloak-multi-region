@@ -1,0 +1,41 @@
+{
+  "realm": "realm-bangalore",
+  "roles": {
+    "realm": [
+      { "name": "admin" },
+      { "name": "member" },
+	  { "name": "user" }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "frontend-app-bangalore",
+      "publicClient": true,
+      "redirectUris": ["http://localhost:4000/*"],
+      "webOrigins": ["+"],
+      "defaultRoles": ["user"]
+    },
+    {
+      "clientId": "backend-service-bangalore",
+      "secret": "bangalore-secret-key",
+      "serviceAccountsEnabled": true,
+      "authorizationServicesEnabled": true,
+      "protocol": "openid-connect",
+      "defaultRoles": ["admin"]
+    }
+  ],
+  "groups": [
+    {
+      "name": "Admins-BLR",
+      "realmRoles": ["admin"]
+    },
+    {
+      "name": "Members-BLR",
+      "realmRoles": ["member"]
+    },
+	{
+      "name": "Users-BLR",
+      "realmRoles": ["user"]
+    }
+  ]
+}

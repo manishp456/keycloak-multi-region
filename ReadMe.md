@@ -49,10 +49,10 @@ Check from inside the Keycloak container:
    ping postgres-global   
 
 Access both Keycloaks independently
-   Global instance: http://keycloak-global.local:9000/admin
-   Bangalore instance: http://keycloak-bangalore.local:9090/admin
-   
-                       http://keycloak-bangalore.local:9090/admin
+   Global instance: 
+                     http://keycloak-global.local:9000/admin
+   Bangalore instance: 
+                     http://keycloak-bangalore.local:9090/admin
    
 Both will now work simultaneously, with separate sessions and cookies.
 

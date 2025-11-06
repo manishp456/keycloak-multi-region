@@ -1,12 +1,5 @@
-keycloak-multi-region/
-├── docker-compose.yml
-├── postgres/
-│   ├── init-global.sql
-│   ├── init-bangalore.sql
-│   
-├── keycloak/
-│   ├── realm-global.json
-│   ├── realm-bangalore.json
+
+<img width="625" height="452" alt="image" src="https://github.com/user-attachments/assets/6d054714-68ef-47e9-a8ea-f1f78bce2edd" />
 
 
 Check if the docker process is running using the below command 

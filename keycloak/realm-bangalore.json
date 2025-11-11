@@ -16,7 +16,7 @@
       "credentials": [{ "type": "password", "value": "admin@123" }],
       "realmRoles": ["admin"],
 	  "emailVerified":true,
-	  "email": "manishkumar.03@gmail.com",
+	  "email": "bangalore.admin@amazingminutes.com",
 	  "realmRoles": ["admin"] 
     }
   ],

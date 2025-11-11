@@ -25,7 +25,7 @@ services:
       POSTGRES_USER: superuser
       POSTGRES_PASSWORD: keycloak@123
     volumes:
-      - ./postgres/init-bangalore.sql:/docker-entrypoint-initdb.d/init-bangalore.sql
+      - ./postgres/init-bangalore.sql:/docker-entrypoint-initdb.d/init-bangalore.sql:ro
       - postgres-bangalore-data:/var/lib/postgresql/data
     networks:
       - hours-net
@@ -39,10 +39,12 @@ services:
     image: quay.io/keycloak/keycloak:26.0.7
     container_name: keycloak-global
     depends_on:
-      - postgres-global
+       postgres-global:
+            condition: service_healthy
     environment:
       KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://postgres-global:5432/global_db_instance
+      KC_DB_URL_HOST: postgres-global
+      KC_DB_URL_DATABASE: global_db_instance
       KC_DB_USERNAME: superuser
       KC_DB_PASSWORD: keycloak@123
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
@@ -83,10 +85,11 @@ services:
       KC_HOSTNAME: keycloak-bangalore.local
       KC_PROXY_HEADERS: xforwarded
     ports:
-      - "9090:8080"
-    command: start-dev
+      - "9100:8080"
+    command: start-dev --import-realm
     depends_on:
-      - postgres-bangalore
+       postgres-bangalore:
+         condition: service_healthy
     volumes:
       - ./keycloak/realm-bangalore.json:/opt/keycloak/data/import/realm-bangalore.json
     networks:

@@ -70,13 +70,15 @@ services:
   keycloak-bangalore:
     image: quay.io/keycloak/keycloak:26.0.7
     container_name: keycloak-bangalore
+    depends_on:
+       postgres-bangalore:
+         condition: service_healthy
     environment:
       KC_DB: postgres
       KC_DB_URL_HOST: postgres-bangalore
       KC_DB_URL_DATABASE: bangalore_db_instance
       KC_DB_USERNAME: superuser
       KC_DB_PASSWORD: keycloak@123
-      KC_HTTP_RELATIVE_PATH: /auth
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin@123
       KC_PROXY: edge
@@ -87,9 +89,7 @@ services:
     ports:
       - "9100:8080"
     command: start-dev --import-realm
-    depends_on:
-       postgres-bangalore:
-         condition: service_healthy
+    
     volumes:
       - ./keycloak/realm-bangalore.json:/opt/keycloak/data/import/realm-bangalore.json
     networks:

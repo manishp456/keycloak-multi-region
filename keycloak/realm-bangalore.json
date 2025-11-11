@@ -4,35 +4,37 @@
   "displayName": "bangalore Region Realm",
   "roles": {
     "realm": [
-      { "name": "owner" },
-      { "name": "driver" },
-      { "name": "user" },
-      { "name": "member" }
+      { "name": "admin" },
+      { "name": "member" },
+      { "name": "user" }
     ]
   },
   "users": [
     {
-      "username": "bangalore_admin",
+      "username": "admin",
       "enabled": true,
-      "credentials": [{ "type": "password", "value": "admin123" }],
-      "realmRoles": ["owner"],
+      "credentials": [{ "type": "password", "value": "admin@123" }],
+      "realmRoles": ["admin"],
 	  "emailVerified":true,
 	  "email": "manishkumar.03@gmail.com",
-	   "realmRoles": ["realm-owner"] 
+	  "realmRoles": ["admin"] 
     }
   ],
   "clients": [
     {
-      "clientId": "bangalore-client",
-      "secret": "bangalore-secret",
+      "clientId": "backend-service",
+      "secret": "backend-secret-key",
+	  "directAccessGrantsEnabled": true,
       "publicClient": false,
+	  "authorizationServicesEnabled": true,
+	  "protocol": "openid-connect",
       "redirectUris": ["*"]
     }
   ],
   "groups": [
     {
       "name": "Admins-BLR",
-      "realmRoles": ["owner"]
+      "realmRoles": ["admin"]
     },
     {
       "name": "Members-BLR",
@@ -41,10 +43,7 @@
 	{
       "name": "Users-BLR",
       "realmRoles": ["user"]
-    },
-	{
-      "name": "Drivers-BLR",
-      "realmRoles": ["driver"]
     }
   ]
+  
 }

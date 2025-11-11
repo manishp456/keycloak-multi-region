@@ -7,6 +7,32 @@
 	  { "name": "user" }
     ]
   },
+   "users": [
+    {
+      "username": "admin",
+      "enabled": true,
+      "email": "bangalore.admin@amazingminutes.com",
+      "emailVerified": true,
+      "firstName": "System",
+      "lastName": "Administrator",
+
+      "credentials": [
+        {
+          "type": "password",
+          "value": "admin@123",
+          "temporary": false
+        }
+      ],
+
+      "realmRoles": [
+        "admin",
+		"member",
+        "user"
+      ],
+
+      "requiredActions": []
+    }
+  ],
   "clients": [
     {
       "clientId": "frontend-app-bangalore",

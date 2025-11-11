@@ -4,7 +4,7 @@
 -- Purpose: create dedicated Keycloak DB + user with least privileges
 -- ===========================================
 
-DROP DATABASE global_db_instance;
+--DROP DATABASE global_db_instance;
 
 -- Create database for Keycloak Global instance
 CREATE DATABASE global_db_instance OWNER superuser;

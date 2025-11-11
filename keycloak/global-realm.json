@@ -4,16 +4,45 @@
   "displayName": "Global Identity Broker",
   "roles": {
     "realm": [
-      { "name": "superuser" },
-      { "name": "global-admin" }
+      { "name": "admin" },
+      { "name": "member" },
+      { "name": "user" }
     ]
   },
+  "users": [
+    {
+      "username": "admin",
+      "enabled": true,
+      "credentials": [{ "type": "password", "value": "admin@123" }],
+      "realmRoles": ["admin"],
+	  "emailVerified":true,
+	  "email": "manishkumar.03@gmail.com",
+	  "realmRoles": ["admin"] 
+    }
+  ],
   "clients": [
     {
-      "clientId": "global-console",
+      "clientId": "backend-service",
+	  "secret": "backend-secret-key",
       "directAccessGrantsEnabled": true,
-      "publicClient": true,
+      "publicClient": false,
+	  "authorizationServicesEnabled": true,
+	  "protocol": "openid-connect",
       "redirectUris": ["*"]
+    }
+  ],
+  "groups": [
+    {
+      "name": "Admins-BLR",
+      "realmRoles": ["admin"]
+    },
+    {
+      "name": "Members-BLR",
+      "realmRoles": ["member"]
+    },
+	{
+      "name": "Users-BLR",
+      "realmRoles": ["user"]
     }
   ],
   "identityProviders": [
@@ -22,12 +51,14 @@
       "displayName": "bangalore Region",
       "providerId": "keycloak-oidc",
       "enabled": true,
+	  "trustEmail": true,
       "config": {
-        "authorizationUrl": "http://keycloak-bangalore:8080/realms/realm-bangalore/protocol/openid-connect/auth",
-        "tokenUrl": "http://keycloak-bangalore:8080/realms/realm-bangalore/protocol/openid-connect/token",
-        "clientId": "bangalore-client",
-        "clientSecret": "bangalore-secret"
+        "authorizationUrl": "http://keycloak-bangalore.local/:8080/realms/realm-bangalore/protocol/openid-connect/auth",
+        "tokenUrl": "http://keycloak-bangalore.local:8080/realms/realm-baganlore/protocol/openid-connect/token",
+        "clientId": "backend-service",
+        "clientSecret": "backend-secret-key"
       }
     }
   ]
+  
 }

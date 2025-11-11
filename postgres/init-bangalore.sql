@@ -3,7 +3,7 @@
 -- Purpose: create dedicated Keycloak DB + user with least privileges
 -- ===========================================
 
-DROP DATABASE bangalore_db_instance;
+--DROP DATABASE bangalore_db_instance;
 
 -- Create database for Keycloak Bangalore instance
 CREATE DATABASE bangalore_db_instance;
